@@ -1,13 +1,9 @@
-name: CI/CD Pipeline
+name: Tikube CI/CD Workflow
 
 on:
-  push:
-    branches:
-      - feature/**
   pull_request:
     branches:
-      - development
-      - master
+      - main
 
 jobs:
   test_and_quality_check:
@@ -44,7 +40,7 @@ jobs:
   build_and_push:
     needs: test_and_quality_check
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     steps:
     - uses: actions/checkout@v2
     - name: Log in to Docker Hub
