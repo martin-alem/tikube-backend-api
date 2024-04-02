@@ -14,7 +14,7 @@ RUN go mod download
 COPY . .
 
 # Build the Go app
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o myapp .
+RUN CGO_ENABLED=0 GOOS=linux go build -v -o tikube ./cmd/main/main.go
 
 # Start a new stage from scratch
 FROM alpine:latest
@@ -22,10 +22,10 @@ FROM alpine:latest
 WORKDIR /root/
 
 # Copy the Pre-built binary file from the previous stage
-COPY --from=build /app/myapp .
+COPY --from=build /app/tikube .
 
 # Expose port 8080 to the outside world
 EXPOSE 8080
 
 # Command to run the executable
-CMD ["./myapp"]
+CMD ["./tikube"]
